@@ -43,6 +43,29 @@ export const createTask = async (req: Request, res: Response) : Promise<void> =>
         res.status(201).json({ success: true, newTask })
     } catch (error: any) {
         res.status(500).json({ success: false, message: `Error creating task: ${error.message}`} )
-    }
+     }
 }
 
+export const updateTaskStatus = async (req: Request, res: Response): Promise<void> => {
+    const { taskId } = req.params;
+    const { status } = req.body;
+    
+    if (isNaN(Number(taskId))) {
+        res.status(400).json({ success: false, message: "Invalid task ID" });
+        return;
+    }
+
+    try {
+        const updatedTask = await prisma.task.update({
+            where: {
+                id: Number(taskId),
+            },
+            data: { status: status }
+        })
+
+        res.json({ success: true, updatedTask });
+
+    } catch (error: any) {
+        res.status(500).json({ success: false, message: "Error updating task: " + error.message })
+    }
+}
