@@ -26,17 +26,12 @@ const createProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const { name, description, startDate, endDate } = req.body;
     try {
         const newProject = yield prisma.project.create({
-            data: {
-                name,
-                description,
-                startDate,
-                endDate
-            }
+            data: { name, description, startDate, endDate }
         });
         res.status(201).json({ success: true, newProject });
     }
     catch (error) {
-        res.status(500).json({ success: true, message: `Error creating project: ${error.message}` });
+        res.status(500).json({ success: false, message: `Error creating project: ${error.message}` });
     }
 });
 exports.createProject = createProject;

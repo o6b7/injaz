@@ -17,15 +17,10 @@ export const createProject = async (req: Request, res: Response) : Promise<void>
 
     try {
         const newProject = await prisma.project.create({
-            data: {
-                name,
-                description, 
-                startDate,
-                endDate
-            }
+            data: { name, description, startDate, endDate }
         })
         res.status(201).json({ success: true, newProject })
     } catch (error: any) {
-        res.status(500).json({ success: true, message: `Error creating project: ${error.message}`} )
+        res.status(500).json({ success: false, message: `Error creating project: ${error.message}`} )
     }
 }

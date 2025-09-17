@@ -9,28 +9,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTasks = void 0;
+exports.createTask = exports.getTasks = void 0;
 const client_1 = require("@prisma/client");
-const validateId_1 = require("../utils/validateId");
 const prisma = new client_1.PrismaClient();
 const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const validation = (0, validateId_1.validateId)(req.query, "projectId");
-    if (!validation.valid) {
-        res.status(400).json({ success: false, message: validation.message });
+    const { projectId } = req.query;
+    if (isNaN(Number(projectId))) {
+        res.status(400).json({ success: false, message: "Invalid project ID" });
         return;
     }
-    const projectId = validation.value;
     try {
         const tasks = yield prisma.task.findMany({
-            where: { projectId },
-            include: { author: true, assignee: true, comments: true, attachments: true }
+            where: {
+                projectId: Number(projectId),
+            },
+            include: {
+                author: true,
+                assignee: true,
+                comments: true,
+                attachments: true,
+            }
         });
-        tasks.length < 1
-            ? res.status(404).json({ success: false, message: "No tasks for the chosen project" })
-            : res.json({ success: true, tasks });
+        tasks.length < 1 ?
+            res.status(500).json({ success: false, message: "No tasks for the chosen project" }) :
+            res.json({ success: true, tasks });
     }
     catch (error) {
         res.status(500).json({ success: false, message: "Error fetching tasks: " + error.message });
     }
 });
 exports.getTasks = getTasks;
+const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { title, description, status, priority, tags, startDate, dueDate, points, projectId, authorUserId, assignedUserId } = req.body;
+    try {
+        const newTask = yield prisma.task.create({
+            data: { title, description, status, priority, tags, startDate, dueDate, points, projectId, authorUserId, assignedUserId }
+        });
+        res.status(201).json({ success: true, newTask });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, message: `Error creating task: ${error.message}` });
+    }
+});
+exports.createTask = createTask;
