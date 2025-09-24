@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
 
 *,
 *::before,
@@ -8,10 +9,12 @@
   box-sizing: border-box;
 }
 
+
 html,
 body,
 #root,
 .app {
+  font-family: "IBM Plex Sans Arabic", sans-serif;
   height: 100%;
   width: 100%;
   @apply text-sm;

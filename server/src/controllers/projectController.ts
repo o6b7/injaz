@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 export const getProjects = async (req: Request, res: Response) : Promise<void> => {
     try {
         const projects = await prisma.project.findMany();
-        res.json({ success: true, projects })
+        res.json(projects);
     } catch (error: any) {
-        res.status(500).json({ success: false, message: "Error fetching projects: " + error.message} )
+        res.status(500).json({ message: `Error retrieving projects: ${error.message}` });
     }
 }
 
@@ -19,8 +19,8 @@ export const createProject = async (req: Request, res: Response) : Promise<void>
         const newProject = await prisma.project.create({
             data: { name, description, startDate, endDate }
         })
-        res.status(201).json({ success: true, newProject })
+        res.status(201).json(newProject);
     } catch (error: any) {
-        res.status(500).json({ success: false, message: `Error creating project: ${error.message}`} )
+        res.status(500).json({ message: `Error creating a project: ${error.message}` });
     }
 }

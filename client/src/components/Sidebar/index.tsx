@@ -3,7 +3,6 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { setIsSidebarCollapsed } from "@/state";
-// import { useGetAuthUserQuery, useGetProjectsQuery } from "@/state/api";
 // import { signOut } from "aws-amplify/auth";
 import {
   AlertCircle,
@@ -27,6 +26,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import { useGetProjectsQuery } from "@/state/api";
 
 const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(true);
@@ -38,7 +38,8 @@ const Sidebar = () => {
     setIsMounted(true);
   }, []);
 
-  // const { data: projects } = useGetProjectsQuery();
+  const { data: projects } = useGetProjectsQuery();
+  console.log(projects)
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed,
@@ -66,7 +67,7 @@ const Sidebar = () => {
       x: 0, 
       opacity: 1,
       transition: { 
-        type: "spring", 
+        type: "spring" as const, 
         damping: 20, 
         stiffness: 200 
       }
@@ -75,7 +76,7 @@ const Sidebar = () => {
       x: "100%",
       opacity: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         damping: 20,
         stiffness: 200
       }
@@ -185,14 +186,14 @@ const Sidebar = () => {
                   transition={{ duration: 0.2 }}
                   className="overflow-hidden"
                 >
-                  {/* {projects?.map((project) => (
+                  {projects?.map((project) => (
                     <SidebarLink
                       key={project.id}
                       icon={Briefcase}
                       label={project.name}
                       href={`/projects/${project.id}`}
                     />
-                  ))} */}
+                  ))}
                   
                   {/* Placeholder projects for demo */}
                   <SidebarLink icon={Briefcase} label="مشروع تجريبي ١" href="/projects/1" />

@@ -14,10 +14,6 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { projectId } = req.query;
-    if (isNaN(Number(projectId))) {
-        res.status(400).json({ success: false, message: "Invalid project ID" });
-        return;
-    }
     try {
         const tasks = yield prisma.task.findMany({
             where: {
@@ -30,12 +26,10 @@ const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 attachments: true,
             }
         });
-        tasks.length < 1 ?
-            res.status(500).json({ success: false, message: "No tasks for the chosen project" }) :
-            res.json({ success: true, tasks });
+        res.json(tasks);
     }
     catch (error) {
-        res.status(500).json({ success: false, message: "Error fetching tasks: " + error.message });
+        res.status(500).json({ message: "Error fetching tasks: " + error.message });
     }
 });
 exports.getTasks = getTasks;
@@ -45,20 +39,16 @@ const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const newTask = yield prisma.task.create({
             data: { title, description, status, priority, tags, startDate, dueDate, points, projectId, authorUserId, assignedUserId }
         });
-        res.status(201).json({ success: true, newTask });
+        res.status(201).json(newTask);
     }
     catch (error) {
-        res.status(500).json({ success: false, message: `Error creating task: ${error.message}` });
+        res.status(500).json({ message: `Error creating task: ${error.message}` });
     }
 });
 exports.createTask = createTask;
 const updateTaskStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { taskId } = req.params;
     const { status } = req.body;
-    if (isNaN(Number(taskId))) {
-        res.status(400).json({ success: false, message: "Invalid task ID" });
-        return;
-    }
     try {
         const updatedTask = yield prisma.task.update({
             where: {
@@ -66,10 +56,10 @@ const updateTaskStatus = (req, res) => __awaiter(void 0, void 0, void 0, functio
             },
             data: { status: status }
         });
-        res.json({ success: true, updatedTask });
+        res.json(updatedTask);
     }
     catch (error) {
-        res.status(500).json({ success: false, message: "Error updating task: " + error.message });
+        res.status(500).json({ message: "Error updating task: " + error.message });
     }
 });
 exports.updateTaskStatus = updateTaskStatus;
