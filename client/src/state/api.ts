@@ -9,19 +9,21 @@ export interface Project {
   endDate?: string;
 }
 
+// ترجمة حالات المهام
 export enum Status {
-  ToDo = "To Do",
-  WorkInProgress = "Work In Progress",
-  UnderReview = "Under Review",
-  Comlpleted = "Completed",
+  ToDo = "قيد التخطيط",
+  WorkInProgress = "قيد التنفيذ",
+  UnderReview = "قيد المراجعة",
+  Comlpleted = "مكتملة",
 }
 
+// ترجمة الأولويات
 export enum Priority {
-  Urgent = "Urgent",
-  High = "High",
-  Medium = "Medium",
-  Low = "Low",
-  Backlog = "Backlog",
+  Urgent = "عاجلة",
+  High = "مرتفعة",
+  Medium = "متوسطة",
+  Low = "منخفضة",
+  Backlog = "قائمة الانتظار",
 }
 
 export interface User {
@@ -57,8 +59,8 @@ export interface Task {
 
   author?: User;
   assignee?: User;
-  comment?: Comment[];
-  attachment?: Attachment;
+  comments?: Comment[];
+  attachments?: Attachment[];
 }
 
 export const api = createApi({
