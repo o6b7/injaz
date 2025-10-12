@@ -3,6 +3,10 @@
 import React, { useState } from 'react'
 import ProjectHeader from '../ProjectHeader'
 import Board from '../BoardView'
+import List from '../ListView'
+import Timeline from '../TimelineView'
+import TableView from '../TableView'
+import ModalNewTask from '@/components/ModalNewTask'
 
 type Props = {
     params: {id: string}
@@ -15,10 +19,20 @@ const Project = ({ params }: Props) => {
 
   return (
     <div>
+      <ModalNewTask isOpen={isModalNewTaskOpen} onClose={() => setIsModalNewTaskOpen(false)} projectId={Number(id)}/>
       {/* NEW TASK MODAL */}
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab}/>
-      { activeTab === "Board" && (
+      { activeTab === "لوحة" && (
         <Board id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
+      )}
+      { activeTab === "قائمة" && (
+        <List id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
+      )}
+      { activeTab === "الجدول الزمني" && (        
+        <Timeline id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
+      )}
+      { activeTab === "جدول" && (        
+        <TableView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
       )}
 
     </div>
