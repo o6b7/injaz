@@ -13,35 +13,26 @@ exports.search = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const search = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { query } = req.query;
+    var _a;
+    const query = (_a = req.query.query) === null || _a === void 0 ? void 0 : _a.trim();
     try {
-        const tasks = yield prisma.task.findMany({
-            where: {
-                OR: [
-                    { title: { contains: query } },
-                    { description: { contains: query } },
-                ]
-            }
-        });
-        const projects = yield prisma.project.findMany({
-            where: {
-                OR: [
-                    { name: { contains: query } },
-                    { description: { contains: query } },
-                ]
-            }
-        });
-        const users = yield prisma.user.findMany({
-            where: {
-                OR: [
-                    { username: { contains: query } },
-                ]
-            }
-        });
+        const [tasks, projects, users] = yield Promise.all([
+            prisma.task.findMany({ where: { OR: [
+                        { title: { contains: query, mode: "insensitive" } },
+                        { description: { contains: query, mode: "insensitive" } },
+                    ] } }),
+            prisma.project.findMany({ where: { OR: [
+                        { name: { contains: query, mode: "insensitive" } },
+                        { description: { contains: query, mode: "insensitive" } },
+                    ] } }),
+            prisma.user.findMany({ where: { OR: [
+                        { username: { contains: query, mode: "insensitive" } },
+                    ] } }),
+        ]);
         res.json({ tasks, projects, users });
     }
-    catch (error) {
-        res.status(500).json({ message: "Error performing search: " + error.message });
+    catch (err) {
+        res.status(500).json({ message: "Error performing search: " + err.message });
     }
 });
 exports.search = search;

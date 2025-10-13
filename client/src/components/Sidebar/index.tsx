@@ -118,7 +118,7 @@ const Sidebar = () => {
           {/* TOP LOGO SECTION */}
           <div className="z-50 flex min-h-[56px] w-full items-center justify-between bg-white px-6 pt-3 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <div className="text-xl font-bold text-gray-800 dark:text-white">
-              EDLIST
+              إنجاز
             </div>
             <button
               className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
