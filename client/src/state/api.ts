@@ -70,7 +70,7 @@ export interface SearchResults {
 }
 
 export interface Team {
-  teamId: number;
+  id: number;
   teamName: string;
   productOwnerUserId?: number;
   projectManagerUserId?: number;

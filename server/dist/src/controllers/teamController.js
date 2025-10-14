@@ -17,7 +17,7 @@ const getTeams = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const teams = yield prisma.team.findMany();
         const teamsWithUsernames = yield Promise.all(teams.map((team) => __awaiter(void 0, void 0, void 0, function* () {
             const productOwner = yield prisma.user.findUnique({
-                where: { userId: team.productOwnerUsrId },
+                where: { userId: team.productOwnerUserId },
                 select: { username: true }
             });
             const projectManager = yield prisma.user.findUnique({
