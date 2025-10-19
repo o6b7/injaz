@@ -99,14 +99,27 @@ export const api = createApi({
       transformResponse: (response: Task[]) => {
         const statusMap: Record<string, Status> = {
           "To Do": Status.ToDo,
-          "Work In Progress": Status.WorkInProgress, 
+          "Work In Progress": Status.WorkInProgress,
           "In Review": Status.UnderReview,
           "Completed": Status.Comlpleted,
         };
-        return response.map((task) => ({
-          ...task,
-          status: task.status ? (statusMap[task.status] || task.status as Status) : task.status,
-        }));
+        
+        return response.map((task) => {
+          let convertedStatus: Status | undefined = undefined;
+          
+          if (task.status) {
+            // Use mapped status or check if it's already a valid Status enum value
+            convertedStatus = statusMap[task.status] || 
+                            (Object.values(Status).includes(task.status as Status) 
+                              ? task.status as Status 
+                              : undefined);
+          }
+          
+          return {
+            ...task,
+            status: convertedStatus,
+          };
+        });
       },
       providesTags: (result) =>
         result
