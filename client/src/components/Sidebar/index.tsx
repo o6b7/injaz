@@ -132,7 +132,7 @@ const Sidebar = () => {
           <div className="flex items-center gap-4 border-b border-gray-200 px-6 py-4 dark:border-gray-800">
             <div className="relative h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
               <Image
-                src="/logo.png"
+                src="https://injaz-s3-images.s3.eu-north-1.amazonaws.com/logo.png"
                 alt="Team Logo"
                 width={32}
                 height={32}
@@ -193,10 +193,6 @@ const Sidebar = () => {
                       href={`/projects/${project.id}`}
                     />
                   ))}
-                  
-                  {/* Placeholder projects for demo */}
-                  <SidebarLink icon={Briefcase} label="مشروع تجريبي ١" href="/projects/1" />
-                  <SidebarLink icon={Briefcase} label="مشروع تجريبي ٢" href="/projects/2" />
                 </motion.div>
               )}
             </AnimatePresence>

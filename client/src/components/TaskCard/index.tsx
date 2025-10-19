@@ -84,7 +84,7 @@ const TaskCard = ({ task, showStatusToggle = false }: Props) => {
                         {showImage && (
                             <div className="overflow-hidden rounded-lg cursor-pointer" onClick={() => setShowImageModal(true)}>
                                 <Image 
-                                    src={`/${firstAttachment.fileURL}`}
+                                    src={`https://injaz-s3-images.s3.eu-north-1.amazonaws.com/${firstAttachment.fileURL}`}
                                     alt={firstAttachment.fileName || 'Task attachment'}
                                     width={400}
                                     height={200}
@@ -235,7 +235,7 @@ const TaskCard = ({ task, showStatusToggle = false }: Props) => {
                         <div className="flex-1 p-6 bg-gray-50 dark:bg-gray-800 flex items-center justify-center min-h-[400px] max-h-[70vh] overflow-auto">
                             <div className="relative w-full h-full flex items-center justify-center">
                                 <Image 
-                                    src={`/${firstAttachment.fileURL}`}
+                                    src={`https://injaz-s3-images.s3.eu-north-1.amazonaws.com/${firstAttachment.fileURL}`}
                                     alt={firstAttachment.fileName || 'Task attachment'}
                                     width={1200}
                                     height={800}

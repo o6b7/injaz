@@ -82,7 +82,7 @@ const UserCard = ({ user, showStats = true, showActions = true }: Props) => {
                         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center relative overflow-hidden">
                             {user.profilePictureUrl ? (
                                 <Image 
-                                    src="/p4.jpeg"
+                                    src="https://injaz-s3-images.s3.eu-north-1.amazonaws.com/p4.jpeg"
                                     alt={user.username}
                                     width={64}
                                     height={64}

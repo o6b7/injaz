@@ -21,7 +21,7 @@ const Users = () => {
           <div className="h-10 w-10 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
             {row.profilePictureUrl ? (
               <Image 
-                src={`/${row.profilePictureUrl}`}
+                src={`https://injaz-s3-images.s3.eu-north-1.amazonaws.com/${row.profilePictureUrl}`}
                 alt={row.username}
                 width={40}
                 height={40}
