@@ -94,9 +94,24 @@ export const api = createApi({
     }),
 
     // Tasks
-    getTasks: build.query<Task[], {projectId: number}>({
+    getTasks: build.query<Task[], { projectId: number }>({
       query: ({ projectId }) => `tasks?projectId=${projectId}`,
-      providesTags: (result) => result ? result.map(({ id }) => ({ type: "Tasks" as const, id})) : [{type: "Tasks" as const}],
+      transformResponse: (response: Task[]) => {
+        const statusMap: Record<string, Status> = {
+          "To Do": Status.ToDo,
+          "Work In Progress": Status.WorkInProgress, 
+          "In Review": Status.UnderReview,
+          "Completed": Status.Comlpleted,
+        };
+        return response.map((task) => ({
+          ...task,
+          status: task.status ? (statusMap[task.status] || task.status as Status) : task.status,
+        }));
+      },
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({ type: "Tasks" as const, id }))
+          : [{ type: "Tasks" as const }],
     }),
     getTasksByUser: build.query<Task[], number>({
       query: (userId) => `tasks/user/${userId}`,
