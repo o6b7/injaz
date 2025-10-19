@@ -131,26 +131,28 @@ const Task = ({ task }: TaskProps) => {
 
   const numberOfComments = (task.comments && task.comments.length) || 0;
 
-  const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => {
+    const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => {
     const priorityColors: Record<string, { bg: string; text: string }> = {
         "عاجلة": { bg: "bg-red-200", text: "text-red-700" },
+        "Urgent": { bg: "bg-red-200", text: "text-red-700" },
         "مرتفعة": { bg: "bg-yellow-200", text: "text-yellow-700" },
+        "High": { bg: "bg-yellow-200", text: "text-yellow-700" },
         "متوسطة": { bg: "bg-green-200", text: "text-green-700" },
+        "Medium": { bg: "bg-green-200", text: "text-green-700" },
         "منخفضة": { bg: "bg-blue-200", text: "text-blue-700" },
+        "Low": { bg: "bg-blue-200", text: "text-blue-700" },
         "قائمة الانتظار": { bg: "bg-gray-200", text: "text-gray-700" },
+        "Backlog": { bg: "bg-gray-200", text: "text-gray-700" },
     };
 
-    const colors = priority ? priorityColors[priority] : priorityColors["قائمة الانتظار"];
+    const colors = priorityColors[priority as string] ?? { bg: "bg-gray-200", text: "text-gray-700" };
 
     return (
-        <div
-        className={`rounded-full px-2 py-1 text-xs font-semibold ${colors.bg} ${colors.text}`}
-        >
-        {priority}
+        <div className={`rounded-full px-2 py-1 text-xs font-semibold ${colors.bg} ${colors.text}`}>
+        {priority ?? "قائمة الانتظار"}
         </div>
     );
-  };
-
+    };
 
   return(
     <div
