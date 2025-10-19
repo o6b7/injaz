@@ -9,7 +9,6 @@ export interface Project {
   endDate?: string;
 }
 
-// ترجمة حالات المهام
 export enum Status {
   ToDo = "قيد التخطيط",
   WorkInProgress = "قيد التنفيذ",
@@ -17,7 +16,6 @@ export enum Status {
   Comlpleted = "مكتملة",
 }
 
-// ترجمة الأولويات
 export enum Priority {
   Urgent = "عاجلة",
   High = "مرتفعة",

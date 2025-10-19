@@ -39,10 +39,11 @@ const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
       selector: (row) => row.status || "",
       width: "120px",
       cell: (row) => {
-        const style = statusColors[row.status || "قيد التخطيط"];
+        const status = row.status || "قيد التخطيط";
+        const style = statusColors[status] || statusColors["قيد التخطيط"]; 
         return (
           <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}>
-            {row.status || "قيد التخطيط"}
+            {status}
           </span>
         );
       },

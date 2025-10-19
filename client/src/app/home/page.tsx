@@ -105,16 +105,17 @@ const HomePage = () => {
       ),
     },
     {
-      name: 'الحالة',
-      selector: (row) => row.status || '',
-      cell: (row) => {
-        const style = statusColors[row.status || 'قيد التخطيط'];
+    name: 'الحالة',
+    selector: (row) => row.status || '',
+    cell: (row) => {
+        const status = row.status || 'قيد التخطيط';
+        const style = statusColors[status] || statusColors['قيد التخطيط']; // Fallback to default
         return (
-          <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}>
-            {row.status || 'قيد التخطيط'}
-          </span>
+        <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}>
+            {status}
+        </span>
         );
-      },
+    },
     },
     {
       name: 'الأهمية',
