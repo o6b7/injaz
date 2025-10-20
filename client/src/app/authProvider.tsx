@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
+import "@/app/globals.css"; // if you have Tailwind setup
 
 Amplify.configure({
   Auth: {
@@ -59,7 +62,7 @@ const formFields = {
 
 const AuthProvider = ({ children }: any) => {
   return (
-    <div>
+    <div className="mt-5">
       <Authenticator formFields={formFields}>
         {({ user }: any) =>
           user ? (

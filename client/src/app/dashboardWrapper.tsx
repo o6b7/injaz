@@ -43,7 +43,9 @@ const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <StoreProvider>
       <AuthProvider>
-        <DashboardLayout>{children}</DashboardLayout>
+        <div className="-mt-5">
+          <DashboardLayout>{children}</DashboardLayout>
+        </div>
       </AuthProvider>
     </StoreProvider>
   );

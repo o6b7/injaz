@@ -138,7 +138,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="container h-full w-full bg-transparent p-8">
+    <div className="container h-full w-full bg-transparent mx-auto px-8 py-8 max-w-7xl">
       <Header name="لوحة معلومات إدارة المشاريع" />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* --- Chart 1 --- */}
