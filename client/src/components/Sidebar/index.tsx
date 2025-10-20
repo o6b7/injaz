@@ -3,7 +3,6 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { setIsSidebarCollapsed } from "@/state";
-// import { signOut } from "aws-amplify/auth";
 import {
   AlertCircle,
   AlertOctagon,
@@ -26,7 +25,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import { useGetProjectsQuery } from "@/state/api";
+import { useGetAuthUserQuery, useGetProjectsQuery } from "@/state/api";
+import { signOut } from "aws-amplify/auth";
 
 const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(true);
@@ -44,16 +44,18 @@ const Sidebar = () => {
     (state) => state.global.isSidebarCollapsed,
   );
 
-  // const { data: currentUser } = useGetAuthUserQuery({});
-  // const handleSignOut = async () => {
-  //   try {
-  //     await signOut();
-  //   } catch (error) {
-  //     console.error("Error signing out: ", error);
-  //   }
-  // };
-  // if (!currentUser) return null;
-  // const currentUserDetails = currentUser?.userDetails;
+  const { data: currentUser } = useGetAuthUserQuery({});
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+  if (!currentUser) return null;
+  
+  const username = currentUser?.userDetails?.username || currentUser?.user?.username;
+  const profilePictureUrl = currentUser?.userDetails?.profilePictureUrl;
 
   // Handle sidebar toggle
   const toggleSidebar = () => {
@@ -254,21 +256,29 @@ const Sidebar = () => {
           </div>
         </div>
         
-        {/* USER PROFILE SECTION (Mobile only) */}
-        <div className="sticky bottom-0 z-10 mt-auto flex w-full flex-col items-center gap-4 bg-white px-6 py-4 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 md:hidden">
-          {/* Placeholder user info for demo */}
+        <div className="z-10 mt-32 flex w-full flex-col items-center gap-4 bg-white px-8 py-4 dark:bg-black md:hidden">
           <div className="flex w-full items-center">
-            <div className="align-center flex h-9 w-9 justify-center rounded-full bg-gray-200 dark:bg-gray-700">
-              <User className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            <div className="align-center flex h-9 w-9 justify-center">
+              {profilePictureUrl ? (
+                <Image
+                  src={`https://injaz-s3-images.s3.eu-north-1.amazonaws.com/${profilePictureUrl}`}
+                  alt={username || "User Profile Picture"}
+                  width={100}
+                  height={50}
+                  className="h-full rounded-full object-cover"
+                />
+              ) : (
+                <User className="h-6 w-6 cursor-pointer self-center rounded-full dark:text-white" />
+              )}
             </div>
-            <span className="mx-3 text-sm text-gray-800 dark:text-white truncate flex-1">
-              مستخدم تجريبي
+            <span className="mx-3 text-gray-800 dark:text-white">
+              {username || "User"}
             </span>
             <button
-              className="self-start rounded bg-blue-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-600 transition-colors"
-              // onClick={handleSignOut}
+              className="self-start rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 md:block"
+              onClick={handleSignOut}
             >
-              تسجيل الخروج
+              Sign out
             </button>
           </div>
         </div>
@@ -290,7 +300,7 @@ const SidebarLink = ({ href, icon: Icon, label }: SidebarLinkProps) => {
   return (
     <Link href={href} className="w-full block" aria-current={isActive ? "page" : undefined}>
       <motion.div
-        whileHover={{ x: -4 }} // Changed to negative for RTL
+        whileHover={{ x: -4 }} 
         whileTap={{ scale: 0.98 }}
         className={`relative flex cursor-pointer items-center gap-3 transition-colors px-6 py-3
           ${isActive 
