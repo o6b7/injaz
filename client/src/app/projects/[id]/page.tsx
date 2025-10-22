@@ -5,7 +5,7 @@ import ProjectHeader from '../ProjectHeader'
 import Board from '../BoardView'
 import List from '../ListView'
 import Timeline from '../TimelineView'
-import TableView from '../TableView'
+import TasksTable from '../TasksTable'
 import ModalNewTask from '@/components/ModalNewTask'
 
 type Props = {
@@ -20,8 +20,9 @@ const Project = ({ params }: Props) => {
   return (
     <div>
       <ModalNewTask isOpen={isModalNewTaskOpen} onClose={() => setIsModalNewTaskOpen(false)} projectId={Number(id)}/>
-      {/* NEW TASK MODAL */}
+      
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab}/>
+      
       { activeTab === "لوحة" && (
         <Board id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
       )}
@@ -32,9 +33,13 @@ const Project = ({ params }: Props) => {
         <Timeline id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
       )}
       { activeTab === "جدول" && (        
-        <TableView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen}/>
+          <TasksTable
+            projectId={Number(id)}
+            showBulkActions={true}
+            compact={false}
+          title="جدول المهام"
+          />
       )}
-
     </div>
   )
 }

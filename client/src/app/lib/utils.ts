@@ -1,10 +1,10 @@
-// Updated utils.ts with better dark mode colors
+// Updated utils.ts with correct priority mappings
 import { TableStyles } from "react-data-table-component";
 
 export const dataGridClassNames =
   "border border-gray-200 bg-white shadow dark:border-stroke-dark dark:bg-dark-secondary dark:text-gray-200";
 
-  export const dataGridSxStyles = (isDarkMode: boolean) => {
+export const dataGridSxStyles = (isDarkMode: boolean) => {
   return {
     "& .MuiDataGrid-columnHeaders": {
       color: `${isDarkMode ? "#e5e7eb" : ""}`,
@@ -34,7 +34,6 @@ export const dataGridClassNames =
   };
 };
 
-
 // Enhanced status badge colors with better contrast
 export const statusColors: Record<string, { bg: string; text: string }> = {
   "مكتملة": { 
@@ -55,11 +54,48 @@ export const statusColors: Record<string, { bg: string; text: string }> = {
   },
 };
 
-// Enhanced priority colors
-export const priorityColors: Record<string, string> = {
-  "عالية": "text-red-600 dark:text-red-300",
-  "متوسطة": "text-orange-600 dark:text-orange-300",
-  "منخفضة": "text-green-600 dark:text-green-300",
+// FIXED: Enhanced priority colors - match your API enum values
+export const priorityColors: Record<string, { bg: string; text: string }> = {
+  "عاجلة": { 
+    bg: "bg-red-100 dark:bg-red-900/40", 
+    text: "text-red-800 dark:text-red-200" 
+  },
+  "Urgent": { 
+    bg: "bg-red-100 dark:bg-red-900/40", 
+    text: "text-red-800 dark:text-red-200" 
+  },
+  "مرتفعة": { 
+    bg: "bg-orange-100 dark:bg-orange-900/40", 
+    text: "text-orange-800 dark:text-orange-200" 
+  },
+  "High": { 
+    bg: "bg-orange-100 dark:bg-orange-900/40", 
+    text: "text-orange-800 dark:text-orange-200" 
+  },
+  "متوسطة": { 
+    bg: "bg-yellow-100 dark:bg-yellow-900/40", 
+    text: "text-yellow-800 dark:text-yellow-200" 
+  },
+  "Medium": { 
+    bg: "bg-yellow-100 dark:bg-yellow-900/40", 
+    text: "text-yellow-800 dark:text-yellow-200" 
+  },
+  "منخفضة": { 
+    bg: "bg-green-100 dark:bg-green-900/40", 
+    text: "text-green-800 dark:text-green-200" 
+  },
+  "Low": { 
+    bg: "bg-green-100 dark:bg-green-900/40", 
+    text: "text-green-800 dark:text-green-200" 
+  },
+  "قائمة الانتظار": { 
+    bg: "bg-gray-100 dark:bg-gray-800/80", 
+    text: "text-gray-800 dark:text-gray-200" 
+  },
+  "Backlog": { 
+    bg: "bg-gray-100 dark:bg-gray-800/80", 
+    text: "text-gray-800 dark:text-gray-200" 
+  },
 };
 
 // Improved table styles with better dark mode contrast
