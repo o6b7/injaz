@@ -101,24 +101,32 @@ const Timeline = ({ id, setIsModalNewTaskOpen }: Props) => {
       </div>
 
       {/* Gantt Chart */}
-      <div className="overflow-hidden rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
-        <div style={{ direction: "ltr" }} className="timeline">
-          <Gantt
-            tasks={ganttTasks}
-            {...displayOptions}
-            columnWidth={displayOptions.viewMode === ViewMode.Month ? 150 : 100}
-            listCellWidth="100px"
-          />
-        </div>
-        <div className="px-4 pb-5 pt-1">
-          <button
-            className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
-            onClick={() => setIsModalNewTaskOpen(true)}
-          >
-            Add New Task
-          </button>
-        </div>
-      </div>
+{/* Gantt Chart */}
+<div className="rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
+  <div
+    style={{ direction: "ltr" }}
+    className="timeline-container overflow-x-auto overflow-y-hidden"
+  >
+    <div className="min-w-[700px] sm:min-w-full">
+      <Gantt
+        tasks={ganttTasks}
+        {...displayOptions}
+        columnWidth={displayOptions.viewMode === ViewMode.Month ? 150 : 100}
+        listCellWidth="150px"
+      />
+    </div>
+  </div>
+
+  <div className="px-4 pb-5 pt-1">
+    <button
+      className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
+      onClick={() => setIsModalNewTaskOpen(true)}
+    >
+      Add New Task
+    </button>
+  </div>
+</div>
+
     </div>
   );
 };

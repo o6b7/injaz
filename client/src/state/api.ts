@@ -43,6 +43,14 @@ export interface Attachment {
   uploadedById: number;
 }
 
+type TaskComment = {
+  id: string;
+  text: string;
+  user: {
+    username: string;
+  };
+};
+
 export interface Task {
   id: number;
   title: string; 
@@ -59,7 +67,7 @@ export interface Task {
 
   author?: User;
   assignee?: User;
-  comments?: Comment[];
+  comments?: TaskComment[];
   attachments?: Attachment[];
 }
 
@@ -89,7 +97,7 @@ export const api = createApi({
     },
   }),
   reducerPath: "api",
-  tagTypes: ["Projects", "Tasks", "Users", "Teams"],
+  tagTypes: ["Projects", "Tasks", "Users", "Teams", "Comments"],
   endpoints: (build) => ({
     getAuthUser: build.query({
       queryFn: async (_, _queryApi, _extraoptions, fetchWithBQ) => {
@@ -192,7 +200,36 @@ export const api = createApi({
 
     search: build.query<SearchResults, string>({
       query: (query) => `search?query=${query}`,
-    })
+    }),
+    
+    addComment: build.mutation({
+      query: ({ taskId, text, userSub }) => ({
+        url: `comments/${taskId}`,
+        method: "POST",
+        body: { text, userSub },
+      }),
+      invalidatesTags: (result, error, { taskId }) => [
+        { type: "Comments", id: "LIST" },
+        { type: "Tasks", id: taskId },
+      ],
+    }),
+
+    getComments: build.query({
+      query: (taskId) => `comments/${taskId}`,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }: { id: number }) => ({
+                type: "Comments" as const,
+                id,
+              })),
+              { type: "Comments" as const, id: "LIST" },
+            ]
+          : [{ type: "Comments" as const, id: "LIST" }],
+    }),
+
+
+
   }),
 });
 
@@ -207,4 +244,6 @@ export const {
   useGetTeamsQuery,
   useGetTasksByUserQuery,
   useGetAuthUserQuery,
+  useGetCommentsQuery,
+  useAddCommentMutation,
 } = api;
