@@ -35,7 +35,7 @@ app.use("/api/tasks", taskRoutes_1.default);
 app.use("/api/search", searchRoutes_1.default);
 app.use("/api/users", userRoutes_1.default);
 app.use("/api/teams", teamRoutes_1.default);
-app.use("/api/comments", commentRoute_1.default);
+app.use("/api/tasks", commentRoute_1.default);
 // SERVER
 const port = Number(process.env.PORT) || 3000;
 app.listen(port, "0.0.0.0", () => {

@@ -3,7 +3,7 @@ import { addCommentToTask, getTaskComments } from "../controllers/commentControl
 
 const router = express.Router();
 
-router.post("/:taskId", addCommentToTask);
-router.get("/:taskId", getTaskComments);
+router.post("/:taskId/comments", addCommentToTask);
+router.get("/:taskId/comments", getTaskComments);
 
 export default router;

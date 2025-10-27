@@ -32,7 +32,7 @@ app.use("/api/tasks", taskRoutes)
 app.use("/api/search", searchRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/teams", teamRoutes)
-app.use("/api/comments", commentRoutes)
+app.use("/api/tasks", commentRoutes)
 
 // SERVER
 const port = Number(process.env.PORT) || 3000;

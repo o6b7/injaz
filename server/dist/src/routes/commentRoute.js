@@ -6,6 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const commentController_1 = require("../controllers/commentController");
 const router = express_1.default.Router();
-router.post("/:taskId", commentController_1.addCommentToTask);
-router.get("/:taskId", commentController_1.getTaskComments);
+router.post("/:taskId/comments", commentController_1.addCommentToTask);
+router.get("/:taskId/comments", commentController_1.getTaskComments);
 exports.default = router;

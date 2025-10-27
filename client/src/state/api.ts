@@ -202,34 +202,27 @@ export const api = createApi({
       query: (query) => `search?query=${query}`,
     }),
     
-    addComment: build.mutation({
+    addComment: build.mutation<
+      any, // or define a Comment type
+      { taskId: number; text: string; userSub: string }
+    >({
       query: ({ taskId, text, userSub }) => ({
-        url: `comments/${taskId}`,
+        url: `tasks/${taskId}/comments`,
         method: "POST",
         body: { text, userSub },
       }),
       invalidatesTags: (result, error, { taskId }) => [
-        { type: "Comments", id: "LIST" },
-        { type: "Tasks", id: taskId },
+        { type: "Comments", id: taskId },
       ],
     }),
 
-    getComments: build.query({
-      query: (taskId) => `comments/${taskId}`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }: { id: number }) => ({
-                type: "Comments" as const,
-                id,
-              })),
-              { type: "Comments" as const, id: "LIST" },
-            ]
-          : [{ type: "Comments" as const, id: "LIST" }],
+    getComments: build.query<TaskComment[], number>({
+      query: (taskId) => `tasks/${taskId}/comments`,
+      transformResponse: (response: { success: boolean; data: TaskComment[]; count: number }) => response.data,
+      providesTags: (result, error, taskId) => [
+        { type: "Comments", id: taskId },
+      ],
     }),
-
-
-
   }),
 });
 
