@@ -259,7 +259,7 @@ const Task = ({ task, refetchTasks }: TaskProps) => {
         >
           {comments && comments.length > 0 ? (
             <div className="mt-2 space-y-2">
-              {comments.map((comment) => (
+              {comments.map((comment: any) => (
                 <div
                   key={comment.id}
                   className="rounded-md bg-gray-100 p-2 text-sm dark:bg-dark-tertiary dark:text-white"
