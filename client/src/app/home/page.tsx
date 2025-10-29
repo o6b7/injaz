@@ -156,7 +156,7 @@ const HomePage = () => {
           <TasksTable
             projectId={selectedProjectId}
             showBulkActions={true}
-            compact={false} // Changed from true to false to match project page
+            compact={false}
             title={`مهام المشروع: ${selectedProjectName}`}
           />
         </div>

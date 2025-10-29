@@ -6,8 +6,8 @@ import DashboardWrapper from "./dashboardWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "تطبيق Next.js",
-  description: "تم إنشاؤه بواسطة create next app",
+  title: "Injaz",
+  description: "Task Management",
 };
 
 export default function RootLayout({

@@ -143,7 +143,7 @@ const Sidebar = () => {
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-bold truncate dark:text-gray-200">
-                EDROH TEAM
+                QUSAI TEAM
               </h3>
               <div className="mt-1 flex items-center gap-1">
                 <LockIcon className="h-3 w-3 text-gray-500 dark:text-gray-400" />
